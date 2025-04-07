@@ -1,0 +1,223 @@
+/* 全局样式 */
+:root {
+    --primary: #6a1b9a;
+    --secondary: #9c64a6;
+    --text-dark: #333;
+    --text-light: #fff;
+    --bg-color-1: #3a0a50;
+    --bg-color-2: #f5e6ff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+    height: 100vh;
+    font-family: 'Exo 2', sans-serif;
+    color: var(--text-light);
+}
+
+/* 宇宙背景 */
+#universe-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background: linear-gradient(135deg, var(--bg-color-1) 0%, var(--bg-color-2) 100%);
+    overflow: hidden;
+}
+
+/* 星空粒子 */
+.star {
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: twinkle 5s infinite alternate;
+}
+
+@keyframes twinkle {
+    0% { opacity: 0.3; }
+    100% { opacity: 0.8; }
+}
+
+/* 行星元素 */
+.planet {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(1px);
+    opacity: 0.15;
+    z-index: -1
+}
+
+/* 返回按钮 */
+.back-btn {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 10;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateX(-5px);
+}
+
+.arrow-icon {
+    width: 20px;
+    height: 20px;
+    border-left: 3px solid white;
+    border-bottom: 3px solid white;
+    transform: rotate(45deg);
+    margin-right: 5px;
+}
+
+/* 主内容区 */
+.content-container {
+    display: flex;
+    height: 100vh;
+}
+
+/* 左半部分 */
+.left-section {
+    flex: 1;
+    /* 垂直居中 */
+    display: flex;
+    flex-direction: column;
+    padding: 0 80px 0 80px; /* 左右边距150px */
+    /* 占整个高度 */
+    height: 100%;
+}
+
+/* 标题区 - 占2/10 */
+.title-section {
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 15px;
+}
+
+.eng-title, .chn-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3rem;
+    color: var(--text-light); /* 白色文字 */
+    margin-bottom: 1px;
+}
+
+.chn-title {
+    /* 中文标题 */
+    font-family:'Microsoft YaHei',  sans-serif;
+    font-weight: 500;
+}
+
+/* 介绍文本 - 占3/10 */
+.description-section {
+    /* 占整个高度 */
+    height: 50%;
+    display: flex;
+    /* 两边居中 */
+    align-items: center;
+    /* 两边间距 */
+    padding: 20px 0;
+}
+
+.description-section h6 {
+    /* 统一字体大小 */
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-light);
+    font-weight: 400;
+}
+
+/* 信息区 - 占1/10 */
+.info-section {
+    height: 10%;
+    display: flex;
+    /* 两边间距 */
+    justify-content: space-between;
+    /* 底部间距 */
+    margin-top: auto;
+    padding-bottom: 20px;
+}
+
+.info-item {
+    flex: 1;
+    text-align: center;
+    padding: 0 10px;
+}
+
+.info-item h4 {
+    color: var(--text-light);
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.info-item h6 {
+    color: var(--text-light);
+    font-weight: 400;
+}
+
+/* 右半部分 */
+.right-section {
+    /* 宽度占1/2 */
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 50px; /* 右侧边距150px */
+}
+
+.telescope-image {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    filter: drop-shadow(0 0 20px rgba(0, 180, 216, 0.3));
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+    .left-section, .right-section {
+        padding: 0 80px;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-container {
+        flex-direction: column;
+    }
+    
+    .left-section {
+        padding: 0 40px;
+        height: 60%;
+    }
+    
+    .right-section {
+        height: 40%;
+        padding: 0 40px;
+    }
+    
+    .eng-title, .chn-title {
+        font-size: 2rem;
+    }
+    
+    .description-section h6 {
+        font-size: 1rem;
+    }
+}

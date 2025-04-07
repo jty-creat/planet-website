@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Rotating Mercury (Enhanced)</title>
+    <!-- 引入 ECharts 和 ECharts GL -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min.js"></script>
+    <!-- 引入 Google Fonts 的艺术字体和Stencil字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=STIX+Two+Text&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+        #container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* 返回按钮样式 */
+        .button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: rgb(214, 122, 127); /* 水星主题色（灰色偏粉） */
+            border: none;
+            border-radius: 50%; /* 圆形 */
+            cursor: pointer;
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(214, 122, 127, 0.7); /* 初始光晕效果增强 */
+            transition: box-shadow 0.3s ease; /* 光晕过渡效果 */
+            z-index: 10;
+        }
+        .button:hover {
+            box-shadow: 0 0 30px rgba(214, 122, 127, 1); /* 鼠标悬停时光晕加重 */
+        }
+        /* 左侧文字信息 */
+        .info-panel {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 25%; /* 控制宽度以避免遮挡水星 */
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 5px;
+            text-align: left;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+        .info-panel h1 span:nth-child(1) {
+            font-family: 'STIX Two Text', serif; /* 使用Stencil字体 */
+            color: rgb(214, 122, 127); /* 水星主题色 */
+            font-size: 50px; /* 增大标题字号 */
+        }
+        .info-panel h1 span:nth-child(2) {
+            font-family: 'Dancing Script', cursive; /* 艺术字体 */
+            color: rgb(214, 122, 127); /* 水星主题色 */
+            font-size: 50px; /* 增大标题字号 */
+        }
+        .info-panel p {
+            font-family: 'Beijing', serif; /* 碑楷体 */
+            font-size: 14px;
+            line-height: 2; /* 增大行间距 */
+        }
+        /* 右侧数据 */
+        .metrics {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            text-align: right;
+        }
+        .metrics div {
+            margin-bottom: 10px;
+        }
+        .metrics span {
+            font-family: 'Beijing', serif; /* 碑楷体 */
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .metrics .value {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+
+    <!-- 返回按钮 -->
+    <button class="button" onclick="window.history.back()">&lt;</button>
+
+    <!-- 左侧文字信息 -->
+    <div class="info-panel">
+        <h1><span>Mercury</span><span>水星</span></h1>
+        <p>
+            水星（Mercury）是太阳系中距离太阳最近的行星，也是最小的行星之一。它的直径约为4,880公里，质量仅为地球的5.5%。由于靠近太阳，水星表面温度变化极大，白天可高达约430°C，而夜晚则降至约-180°C。水星没有大气层保护，因此其表面布满了陨石坑，类似于月球。水星的自转周期为59个地球日，而公转周期为88个地球日。
+        </p>
+    </div>
+
+    <!-- 右侧数据 -->
+    <div class="metrics">
+        <div>
+            <span class="value">57,910,000 km</span><br>
+            <span>与太阳平均距离</span>
+        </div>
+        <div>
+            <span class="value">610°C</span><br>
+            <span>温度差</span>
+        </div>
+    </div>
+
+    <script>
+        var option = {
+            backgroundColor: '#000',
+            globe: {
+                baseTexture: 'shui5.jpg', // 本地水星纹理图片
+                heightTexture: 'shui5.jpg', // 本地高度纹理图片（水星表面较为平滑）
+                displacementScale: 0.02, // 地形高度缩放（水星地形相对平坦）
+                shading: 'realistic', // 真实感渲染
+                environment: '#000', // 背景颜色
+                realisticMaterial: {
+                    roughness: 0.8, // 表面粗糙度（水星表面较粗糙）
+                    metalness: 0.2  // 金属感
+                },
+                postEffect: {
+                    enable: true // 后处理效果
+                },
+                light: {
+                    main: {
+                        intensity: 1, // 主光源强度（水星离太阳较近，光照更强）
+                        shadow: true // 启用阴影
+                    },
+                    ambientCubemap: {
+                        diffuseIntensity: 0.3 // 环境光强度
+                    }
+                },
+                viewControl: {
+                    distance: 200, // 放大水星
+                    autoRotate: true, // 开启自动旋转
+                    autoRotateSpeed: 5 // 设置旋转速度
+                }
+            }
+        };
+
+        // 初始化 ECharts 实例
+        var chart = echarts.init(document.getElementById('container'));
+        chart.setOption(option);
+
+        // 自动旋转水星
+        chart.on('rendered', function () {
+            chart.getModel().getComponent('globe').viewControl.autoRotate = true;
+        });
+    </script>
+</body>
+</html>

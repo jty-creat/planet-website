@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>望远镜详情</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Exo+2:wght@300;500&display=swap">
+    <link rel="stylesheet" href="css/style5.css">
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- 宇宙背景 -->
+    <div id="universe-bg"></div>
+    
+    <!-- 返回按钮 -->
+    <div class="back-btn" id="back-btn">
+        <div class="arrow-icon"></div>
+    </div>
+    
+    <!-- 主内容区 -->
+    <main class="content-container">
+        <!-- 左半部分 -->
+        <div class="left-section">
+            <!-- 标题区 -->
+            <div class="title-section" font-family="cursive">
+                <h1 class="eng-title">SOLAR</h1>
+                <h1 class="chn-title">太阳望远镜</h1>
+            </div>
+            
+            <!-- 介绍文本 -->
+            <div class="description-section">
+                <h2>太阳望远镜太阳望远镜是专门用于太阳观测，是用途特殊的光学望远镜。日冕是太阳周围一圈薄薄的、暗弱的外层大气，它的结构复杂，只有在日全食发生的短暂时间内，才能欣赏到,因为天空的光总是从四面八方散射或漫射到望远镜内。1930年第一架由法国天文学家李奥研制的日冕仪诞生了,这种仪器能够有效地遮掉太阳,散射光极小,因此可以在太阳光普照的任何日子里,成功地拍摄日冕照片。从此以后,世界观测日冕的活动逐渐兴起。</h2>
+            </div>
+            
+            <!-- 信息区 -->
+            <div class="info-section">
+                <div class="info-item">
+                    <h4>放大倍数</h4>
+                    <h6>20-50/几百倍</h6>
+                </div>
+                <div class="info-item">
+                    <h4>最佳观测</h4>
+                    <h6>太阳</h6>
+                </div>
+                <div class="info-item">
+                    <h4>维护难度</h4>
+                    <h6>复杂</h6>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 右半部分 -->
+        <div class="right-section">
+            <img src="太阳1-removebg-preview.png" alt="反射式望远镜" class="telescope-image">
+        </div>
+    </main>
+    <script src="js/three-scene4.js"></script>
+    <script src="js/main5.js"></script>
+</body>
+</html>

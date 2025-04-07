@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>行星探索 - 首页</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <div id="stars-container"></div>
+    <div class="page1-content">
+        <h1 class="main-title">Hello World</h1>
+        <button id="enter-btn" class="enter-btn">探索宇宙</button>
+    </div>
+
+    <script src="js/three-scene.js"></script>
+    <script>
+        // 初始化星空背景
+        initStars();
+        
+        document.getElementById('enter-btn').addEventListener('click', function() {
+            window.location.href = 'main.html';
+        });
+    </script>
+</body>
+</html>

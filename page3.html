@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>行星探索 - 行星图鉴</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Exo+2:wght@300;500&display=swap">
+    <link rel="stylesheet" href="css/style2.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- 星空背景 -->
+    <div id="stars-container"></div>
+    
+    <!-- 页面头部 -->
+    <header class="page-header">
+        <div class="logo-title">
+            <img src="logo1.png" alt="行星探索" class="logo">
+            <h2>观星指南</h2>
+        </div>
+        
+        <!-- 返回按钮 -->
+        <div class="back-btn" id="back-btn">
+            <div class="arrow-icon"></div>
+        </div>
+    </header>
+    
+    <!-- 卡片轮播区 -->
+    <main class="card-carousel-container">
+        <div class="card-carousel">
+            <!-- 卡片将通过JavaScript动态生成 -->
+        </div>
+        <div class="carousel-controls">
+            <button class="control-btn prev-btn">❮</button>
+            <button class="control-btn next-btn">❯</button>
+        </div>
+    </main>
+
+    <script src="js/three-scene2.js"></script>
+    <script src="js/main2.js"></script>
+</body>
+</html>

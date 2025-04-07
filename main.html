@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>行星探索 - 主页面</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        /* 追加的CSS样式 */
+/* AI触发按钮 */
+.ai-trigger {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%239C92AC" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm3 7H9v-2h6v2z"/></svg>');
+    cursor: pointer;
+    transition: transform 0.3s;
+    z-index: 1000;
+}
+.ai-trigger:hover { transform: scale(1.1); }
+
+/* 聊天窗口 */
+/* 聊天窗口 */
+/* 聊天窗口容器 */
+.chat-container {
+    position: fixed;
+    top: 0;
+    right: -33%;
+    width: 33%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.1);
+    border-left: 1px solid rgba(156, 146, 172, 0.15);
+    box-shadow: -8px 0 40px rgba(139, 96, 225, 0.3);
+    transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* 动态星空背景层 */
+.chat-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: none;
+}
+
+/* 聊天头部 */
+.chat-header {
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.1);
+    color: #E6E0F8;
+    font-size: 1.4em;
+    font-weight: 300;
+    text-align: center;
+    letter-spacing: 3px;
+    position: relative;
+    border-bottom: 1px solid rgba(156, 146, 172, 0.2);
+}
+
+/* 消息区域 */
+.chat-messages {
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* 消息气泡 */
+.message {
+    margin: 16px 0;
+    padding: 16px 24px;
+    border-radius: 20px;
+    max-width: 85%;
+    position: relative;
+    animation: messageFloat 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    background: rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.user-message {
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(156, 146, 172, 0.15);
+    margin-left: auto;
+    color: #F0ECF9;
+}
+
+.bot-message {
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(92, 78, 147, 0.2);
+    margin-right: auto;
+    color: #E6E0F8;
+}
+
+/* 消息悬浮效果 */
+.message:hover {
+    transform: translateY(-2px);
+}
+
+@keyframes messageFloat {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* 输入区域 */
+.chat-input {
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 16px;
+    border-top: 1px solid rgba(156, 146, 172, 0.15);
+}
+
+#userInput {
+    flex: 1;
+    padding: 14px 20px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(156, 146, 172, 0.2);
+    color: #F0ECF9;
+    border-radius: 12px;
+    transition: all 0.3s;
+    font-size: 1em;
+}
+
+#userInput:focus {
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 16px rgba(92, 78, 147, 0.2);
+}
+
+#sendBtn {
+    padding: 14px 28px;
+    background: rgba(0, 0, 0, 0.1);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+#sendBtn:hover {
+    background: rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 16px rgba(92, 78, 147, 0.3);
+}
+
+/* 自定义滚动条 */
+.chat-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: rgba(156, 146, 172, 0.4);
+    border-radius: 3px;
+}
+
+.active-chat { right: 0; }
+
+    </style>
+</head>
+
+<body>
+    <div id="stars-container"></div>
+
+    <header class="page-header">
+        <div class="logo-title">
+            <img src="logo1.png" alt="行星探索" class="logo">
+            <h2>行星探索</h2>
+        </div>
+        <nav class="main-nav">
+            <a href="#" class="nav-link" data-section="stargazing">观星指南</a>
+            <a href="#" class="nav-link" data-section="telescope">望远镜</a>
+            <a href="./3D-CSS-Solar-System-master/index.html" class="nav-link" data-section="astronaut" target="_blank">太阳系</a>
+        </nav>
+    </header>
+    
+    <main class="page-content">
+        <div class="text-content">
+            <h2 class="english-title">HELLO WE HAVE PLANET</h2>
+            <div class="chinese-title-container">
+                <h3 id="chinese-title" class="chinese-title">观星指南</h3>
+            </div>
+            <button id="explore-btn" class="explore-btn">开始探索</button>
+        </div>
+        <div id="moon-container" class="moon-model"></div>
+    </main>
+
+    <!-- 新增的AI助手组件 -->
+    <div class="ai-trigger" title="AI助手"></div>
+    <div class="chat-container">
+        <div class="chat-header">宇宙知识助手</div>
+        <div class="chat-messages"></div>
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="请输入关于宇宙的问题...">
+            <button id="sendBtn">发送</button>
+        </div>
+    </div>
+
+
+    <script src="js/three-scene.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+
+
+        // 新增的JavaScript功能
+
+        // 聊天功能
+const responses = {
+    '地球': '地球是太阳系中由内及外的第三颗行星，已知唯一存在生命的星球。年龄约45.5亿年，赤道半径6,378公里。拥有液态水圈和富氧大气层，自转周期23小时56分，公转周期365.25天。',
+    '木星': '木星是太阳系体积最大的气态巨行星，质量是其他行星总和的2.5倍。拥有显著的大红斑风暴和79颗已知卫星，具有强大的磁场和行星环系统。',
+    '太阳系': '太阳系是以太阳为中心的恒星系统，包含8大行星、5颗矮行星和众多小天体。直径约287.46亿公里，形成于约45.68亿年前。',
+    '火星': '红色行星，地表富含氧化铁，拥有太阳系最大的火山奥林帕斯山和最长的峡谷水手号峡谷。可能存在地下液态水。',
+    '金星': '温度最高的行星（平均464℃），自转方向与公转相反，大气层96%是二氧化碳，表面压力是地球的92倍。',
+    '水星': '最靠近太阳的行星，昼夜温差最大（-173℃到427℃），表面布满环形山，没有天然卫星。',
+    '土星': '拥有显著的行星环系统，密度低于水。第二大行星，拥有82颗卫星，其中泰坦是太阳系唯一拥有浓厚大气层的卫星。',
+    '天王星': '冰巨星，自转轴倾斜97.77度，呈现侧向自转。大气含甲烷呈现蓝色，温度-224℃是太阳系最冷行星。',
+    '海王星': '风速最快的行星（2100km/h），通过数学预测发现的行星，拥有14颗卫星和暗淡的行星环。',
+    '银河系': '直径约10万光年的棒旋星系，包含1000-4000亿颗恒星。太阳系位于猎户臂，距银心2.6万光年。',
+    '恒星': '通过核聚变发光的等离子体球体，太阳是距离地球最近的恒星，寿命约100亿年。',
+    '黑洞': '时空曲率大到光都无法逃脱的天体，星系中心通常存在超大质量黑洞。',
+    '星云': '由气体和尘埃组成的星际云，恒星诞生地，如猎户座大星云。',
+    '超新星': '恒星演化末期的大爆发，亮度可短暂超越整个星系，是重元素的主要来源。'
+   
+};
+
+// 事件监听
+document.querySelector('.ai-trigger').addEventListener('click', () => {
+    document.querySelector('.chat-container').classList.toggle('active-chat');
+});
+
+document.getElementById('sendBtn').addEventListener('click', sendMessage);
+document.getElementById('userInput').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') sendMessage();
+});
+
+function sendMessage() {
+    const input = document.getElementById('userInput');
+    const messageContainer = document.querySelector('.chat-messages');
+    
+    if (input.value.trim()) {
+        // 用户消息
+        const userDiv = document.createElement('div');
+        userDiv.className = 'message user-message';
+        userDiv.textContent = input.value;
+        messageContainer.appendChild(userDiv);
+        
+        // 机器人回复
+        const botDiv = document.createElement('div');
+        botDiv.className = 'message bot-message';
+        const keyword = Object.keys(responses).find(key => input.value.includes(key));
+        botDiv.textContent = keyword ? responses[keyword] : '当前为演示模式，暂不支持此问题';
+        messageContainer.appendChild(botDiv);
+        
+        // 重置输入
+        input.value = '';
+        messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
+}
+            
+    </script>
+</body>
+</html>

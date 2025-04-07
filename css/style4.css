@@ -1,0 +1,312 @@
+/* 全局样式 */
+:root {
+    --primary: #6a1b9a; /* 更深的紫色 */
+    --secondary: #9c64a6;
+    --text-dark: #333;
+    --text-light: #fff;
+    --bg-color-1: #3a0a50; /* 深紫色 */
+    --bg-color-2: #f5e6ff; /* 淡紫色 */
+    --card-blue: #e6f0ff;
+    --card-purple: #f0e6ff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    min-height: 100vh;
+    font-family: 'Exo 2', sans-serif;
+    color: var(--text-light); /* 文字改为白色 */
+}
+
+/* 宇宙背景 */
+#universe-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background: linear-gradient(135deg, var(--bg-color-1) 0%, var(--bg-color-2) 100%);
+    overflow: hidden;
+}
+
+/* 星空粒子 */
+.star {
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: twinkle 5s infinite alternate;
+}
+
+@keyframes twinkle {
+    0% { opacity: 0.3; }
+    100% { opacity: 0.8; }
+}
+
+/* 行星元素 */
+.planet {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(1px);
+    opacity: 0.15;
+    z-index: -1;
+}
+
+/* 页面头部 */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    height: 12vh; /* 增加高度 */
+    width: 100%;
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+    gap: 25px; /* 增加间距 */
+    position: relative;
+}
+
+.logo {
+    height: 30px; /* 增大logo尺寸 */
+    width: auto;
+    z-index: 2;
+}
+
+.page-header h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.2rem; /* 增大字号 */
+    font-weight: 700; /* 加粗 */
+    letter-spacing: 2px;
+    color: var(--text-light);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    margin: 0;
+}
+
+/* 返回按钮 */
+.back-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateX(-5px);
+}
+
+.arrow-icon {
+    width: 20px;
+    height: 20px;
+    border-left: 3px solid white;
+    border-bottom: 3px solid white;
+    transform: rotate(45deg);
+    margin-right: 5px;
+}
+
+/* 标题区 */
+.title-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh / 3);
+    text-align: center;
+}
+
+.title-content {
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+.title-section h2 {
+    font-family: 'Exo 2', sans-serif;
+    font-size: 2.8rem; /* 增大字号 */
+    font-weight: 300;
+    color: var(--text-light);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.universe-icon {
+    margin-left: 15px;
+    font-size: 2.5rem; /* 增大图标 */
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.title-section h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8rem; /* 增大字号 */
+    letter-spacing: 4px; /* 增加字距 */
+    color: var(--text-light);
+    opacity: 0.9;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+/* 卡片容器 */
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    gap: 40px;
+    padding: 0 40px 40px;
+    grid-template-areas:
+        "card1 card2 card3"
+        "card4 card5 .";
+}
+
+/* 卡片样式 */
+/* 卡片样式修改部分 */
+.telescope-card {
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    padding: 15px; /* 统一卡片内边距 */
+    min-height: 500px;
+}
+
+/* 移除白色背景，文字直接坐落在卡片背景上 */
+.card-content {
+    padding: 0.5cm; /* 文字与卡片边缘间距0.5cm */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: transparent; /* 移除白色背景 */
+    border-radius: 20px;
+    height: calc(100% - 150px);
+}
+
+/* 文字颜色保持紫色 */
+.card-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8rem;
+    color: var(--primary);
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.card-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--primary);
+    margin-bottom: 20px;
+    flex: 1;
+}
+
+/* 卡片背景色调整透明度 */
+#card1 {
+    background: linear-gradient(135deg, rgba(230, 240, 255, 0.9) 0%, rgba(240, 230, 255, 0.9) 100%);
+    grid-area: card1;
+    height: 400px;
+    margin-top: 0;
+}
+
+#card2 {
+    background: rgba(240, 230, 255, 0.9);
+    grid-area: card2;
+    height: 430px;
+    margin-top: 40px;
+}
+
+#card3 {
+    background: rgba(230, 240, 255, 0.9);
+    grid-area: card3;
+    height: 400px;
+    margin-top: 20px;
+}
+
+#card4 {
+    background: rgba(240, 230, 255, 0.9);
+    grid-area: card4;
+    height: 400px;
+    margin-top: -30px;
+}
+
+#card5 {
+    background: linear-gradient(135deg, rgba(240, 230, 255, 0.9) 0%, rgba(230, 240, 255, 0.9) 100%);
+    grid-area: card5;
+    height: 420px;
+    margin-top: 10px;
+}  
+/* 响应式设计 */
+@media (max-width: 1200px) {
+    .card-container {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-areas:
+            "card1 card2"
+            "card3 card4"
+            "card5 .";
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        padding: 15px 20px;
+    }
+    
+    .logo {
+        height: 60px;
+    }
+    
+    .page-header h2 {
+        font-size: 1.8rem;
+    }
+    
+    .title-section h2 {
+        font-size: 2.2rem;
+    }
+    
+    .title-section h3 {
+        font-size: 1.4rem;
+    }
+    
+    .card-container {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "card1"
+            "card2"
+            "card3"
+            "card4"
+            "card5";
+        gap: 60px;
+    }
+    
+  
+    
+    .telescope-image {
+        height: 180px; /* 增大图片区域 */
+    margin-top: auto;
+    }
+    .telescope-image img {
+        max-width: 80%;
+        max-height: 200%;
+    }
+}

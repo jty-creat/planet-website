@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>望远镜详情</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Exo+2:wght@300;500&display=swap">
+    <link rel="stylesheet" href="css/style5.css">
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- 宇宙背景 -->
+    <div id="universe-bg"></div>
+    
+    <!-- 返回按钮 -->
+    <div class="back-btn" id="back-btn">
+        <div class="arrow-icon"></div>
+    </div>
+    
+    <!-- 主内容区 -->
+    <main class="content-container">
+        <!-- 左半部分 -->
+        <div class="left-section">
+            <!-- 标题区 -->
+            <div class="title-section" font-family="cursive">
+                <h1 class="eng-title">CATADIOPIRIC</h1>
+                <h1 class="chn-title">折反射望远镜</h1>
+            </div>
+            
+            <!-- 介绍文本 -->
+            <div class="description-section">
+                <h2>折反射望远镜是将折射系统与反射系统相结合的一种光学系统,可便于校正轴外像差,最早出现于1814年。这种望远镜光力强、视场大、象差小,适合于拍摄大面积的天区照片，尤其是对暗弱星云的拍照效果非常突出。由于折反射望远镜能兼顾折射和反射两种望远镜的优点，非常适合业余的天文观测和天文摄影，并且得到了广大天文爱好者的喜爱。</h2>
+            </div>
+            
+            <!-- 信息区 -->
+            <div class="info-section">
+                <div class="info-item">
+                    <h4>放大倍数</h4>
+                    <h6>200倍</h6>
+                </div>
+                <div class="info-item">
+                    <h4>最佳观测</h4>
+                    <h6>部分深空天体、行星与月面</h6>
+                </div>
+                <div class="info-item">
+                    <h4>维护难度</h4>
+                    <h6>中等</h6>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 右半部分 -->
+        <div class="right-section">
+            <img src="折反射3-removebg-preview.png" alt="反射式望远镜" class="telescope-image">
+        </div>
+    </main>
+    <script src="js/three-scene4.js"></script>
+    <script src="js/main5.js"></script>
+</body>
+</html>

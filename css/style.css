@@ -1,0 +1,394 @@
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* 星空背景 */
+#stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+}
+
+/* 页面1样式 */
+.page1-content {
+    display: flex;
+     /* 垂直居中 */
+    flex-direction: column;
+    /* 水平居中 */
+    justify-content: center;
+    /* 垂直居中 */
+    align-items: center;
+    /* 100vh 高度 */
+    height: 100vh;
+    /* 绝对定位 */
+    position: relative;
+    z-index: 1;
+}
+
+.main-title {
+    color: #8a2be2;
+    /* 字体大小 */
+    font-size: 8rem;
+    /* 文字阴影 */
+    margin-bottom: 2rem;
+    /* 文字阴影 */
+    text-shadow: 0 0 15px rgba(138, 43, 226, 0.7);
+}
+
+.enter-btn {
+    padding: 1rem 2.5rem;
+    font-size: 1.5rem;
+    background: transparent;
+    color: white;
+    border: 2px solid #8a2be2;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.enter-btn:hover {
+    background: #8a2be2;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+}
+
+/* 页面2样式 */
+.page-header {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    height: 10vh;
+    position: relative;
+    z-index: 1;
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+    width: calc(100vw / 12);
+}
+
+.logo {
+    height: 30px;
+    width: auto;
+    margin-right: 1rem;
+}
+
+.page-header h2 {
+    color: white;
+    font-size: 1.8rem;
+    white-space: nowrap;
+}
+
+.main-nav {
+    display: flex;
+    margin-left: 5.5rem;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    margin-right: 2.5rem;
+    font-size: 1.3rem;
+    position: relative;
+    padding: 0.5rem 0;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: #8a2be2;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #8a2be2;
+    transition: width 0.3s;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.page-content {
+    display: flex;
+    height: 90vh;
+    position: relative;
+    z-index: 1;
+}
+
+.text-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 40%;
+    padding-left: 5%;
+}
+
+.english-title {
+    color: white;
+    font-size: 3.5rem;
+    margin-bottom: 2.5rem;
+    line-height: 1.2;
+}
+
+.chinese-title-container {
+    height: 25vh;
+    display: flex;
+    align-items: center;
+}
+
+.chinese-title {
+    color: white;
+    font-size: 3rem;
+    opacity: 1;
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.explore-btn {
+    padding: 1.2rem 2.8rem;
+    font-size: 1.3rem;
+    background: transparent;
+    color: white;
+    border: 2px solid #8a2be2;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 2rem;
+    width: fit-content;
+}
+
+.explore-btn:hover {
+    background: #8a2be2;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+}
+
+.earth-model {
+    width: 60%;
+    height: 100%;
+    position: relative;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+    .english-title {
+        font-size: 2.8rem;
+    }
+    .chinese-title {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-content {
+        flex-direction: column;
+    }
+    .text-content, .earth-model {
+        width: 100%;
+    }
+    .earth-model {
+        height: 50vh;
+    }
+}
+/* 月球容器样式 */
+.moon-model {
+    width: 950px;
+    height: 950px;
+    position: relative;
+    background: transparent;
+    z-index: 2;
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3)); /* 添加微光效果 */
+}
+
+/* 调整页面布局 */
+.page-content {
+    display: flex;
+    height: 90vh;
+    position: relative;
+    z-index: 1;
+    justify-content: space-between; /* 使内容分列两侧 */
+    align-items: center;
+    padding: 0 5%;
+}
+
+/* 聊天窗口容器 */
+.chat-container {
+    position: fixed;
+    top: 0;
+    right: -33%;
+    width: 33%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.1); /* 透明背景 */
+    border-left: 1px solid rgba(156, 146, 172, 0.15);
+    box-shadow: -8px 0 40px rgba(139, 96, 225, 0.3);
+    transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 9999; /* 确保聊天窗口位于最上层 */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* 活动状态的聊天窗口 */
+.active-chat {
+    right: 0;
+}
+
+/* 动态星空背景层 */
+.chat-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: none; /* 不显示星空背景 */
+}
+
+/* 聊天头部 */
+.chat-header {
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.1); /* 透明背景 */
+    color: #E6E0F8;
+    font-size: 1.4em;
+    font-weight: 300;
+    text-align: center;
+    letter-spacing: 3px;
+    position: relative;
+    border-bottom: 1px solid rgba(156, 146, 172, 0.2);
+}
+
+/* 消息区域 */
+.chat-messages {
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.1); /* 透明背景 */
+    z-index: 100; /* 确保消息区域不会遮挡输入框 */
+    position: relative;
+}
+
+/* 消息气泡 */
+.message {
+    margin: 16px 0;
+    padding: 16px 24px;
+    border-radius: 20px;
+    max-width: 85%;
+    position: relative;
+    animation: messageFloat 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    background: rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.user-message {
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(156, 146, 172, 0.15);
+    margin-left: auto;
+    color: #F0ECF9;
+}
+
+.bot-message {
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(92, 78, 147, 0.2);
+    margin-right: auto;
+    color: #E6E0F8;
+}
+
+/* 消息悬浮效果 */
+.message:hover {
+    transform: translateY(-2px);
+}
+
+@keyframes messageFloat {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* 输入区域 */
+.chat-input {
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.1); /* 透明背景 */
+    display: flex;
+    gap: 16px;
+    border-top: 1px solid rgba(156, 146, 172, 0.15);
+    z-index: 10000; /* 确保输入框在最上层 */
+}
+
+/* 输入框 */
+#userInput {
+    flex: 1;
+    padding: 14px 20px;
+    background: rgba(255, 255, 255, 0.12); /* 增加透明背景 */
+    border: 1px solid rgba(156, 146, 172, 0.2);
+    color: #F0ECF9;
+    border-radius: 12px;
+    font-size: 1em;
+    outline: none;
+    z-index: 10001; /* 输入框位于最上层，保证可以输入 */
+    position: relative;
+}
+
+/* 输入框聚焦时 */
+#userInput:focus {
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 16px rgba(92, 78, 147, 0.2);
+}
+
+/* 发送按钮 */
+#sendBtn {
+    padding: 14px 28px;
+    background: rgba(0, 0, 0, 0.1); /* 透明背景 */
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    z-index: 10001; /* 确保按钮也在输入框上方 */
+}
+
+/* 发送按钮悬浮效果 */
+#sendBtn:hover {
+    background: rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 16px rgba(92, 78, 147, 0.3);
+}
+
+/* 自定义滚动条 */
+.chat-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: rgba(156, 146, 172, 0.4);
+    border-radius: 3px;
+}
+

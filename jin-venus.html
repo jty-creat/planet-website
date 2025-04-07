@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Rotating Venus (Local)</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min.js"></script>
+    <!-- 引入 Google Fonts 的艺术字体和Stencil字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=STIX+Two+Text&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+        #container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* 返回按钮样式 */
+        .button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #FFB400; /* 金星主题色（橙黄色） */
+            border: none;
+            border-radius: 50%; /* 圆形 */
+            cursor: pointer;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(255, 180, 0, 0.7); /* 初始光晕效果增强 */
+            transition: box-shadow 0.3s ease; /* 光晕过渡效果 */
+            z-index: 10;
+        }
+        .button:hover {
+            box-shadow: 0 0 30px rgba(255, 180, 0, 1); /* 鼠标悬停时光晕加重 */
+        }
+        .info-panel {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 25%; /* 控制宽度以避免遮挡金星 */
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 5px;
+            text-align: left;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+        .info-panel h1 span:nth-child(1) {
+            font-family: 'STIX Two Text', serif; /* 使用Stencil字体 */
+            color: #FFB400; /* 金星主题色 */
+            font-size: 50px; /* 增大标题字号 */
+        }
+        .info-panel h1 span:nth-child(2) {
+            font-family: 'Dancing Script', cursive; /* 艺术字体 */
+            color: #FFB400; /* 金星主题色 */
+            font-size: 50px; /* 增大标题字号 */
+        }
+        .info-panel p {
+            font-family: 'Beijing', serif; /* 碑楷体 */
+            font-size: 14px;
+            line-height: 2; /* 增大行间距 */
+        }
+        .metrics {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            text-align: right;
+        }
+        .metrics div {
+            margin-bottom: 10px;
+        }
+        .metrics span {
+            font-family: 'Beijing', serif; /* 碑楷体 */
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .metrics .value {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <!-- 返回按钮 -->
+    <button class="button" onclick="window.history.back()">&lt;</button>
+    <!-- 左侧文字信息 -->
+    <div class="info-panel">
+        <h1><span>Venus</span><span>金星</span></h1>
+        <p>金星（Venus）是太阳系八大行星之一，按离太阳由近及远的次序排列为第二颗。金星的直径约为12,104公里，与地球非常接近，因此被称为地球的“姊妹行星”。金星的大气层极为浓厚，主要由二氧化碳组成，并覆盖着一层厚厚的硫酸云，导致表面温度高达约465°C，使其成为太阳系中最热的行星。金星的自转方向与其他行星相反，即自东向西旋转，且自转周期比公转周期还长。其表面布满了火山和熔岩平原，地形复杂多样。</p>
+    </div>
+    <!-- 右侧数据 -->
+    <div class="metrics">
+        <div>
+            <span class="value">108,200,000 km</span><br>
+            <span>距离差</span>
+        </div>
+        <div>
+            <span class="value">465°C</span><br>
+            <span>表面温度</span>
+        </div>
+    </div>
+    <script>
+        var option = {
+            backgroundColor: '#000',
+            globe: {
+                baseTexture: '8k_ jin-venus_surface.jpg', // 本地金星纹理
+                heightTexture: '88k_ jin-venus_surface.jpg', // 本地高度纹理
+                displacementScale: 0.02, // 地形高度缩放（金星地形较为平坦）
+                shading: 'realistic', // 真实感渲染
+                environment: '#000', // 背景颜色
+                realisticMaterial: {
+                    roughness: 0.9, // 表面粗糙度
+                    metalness: 0.1  // 金属感
+                },
+                postEffect: {
+                    enable: true // 后处理效果
+                },
+                light: {
+                    main: {
+                        intensity: 1, // 主光源强度
+                        shadow: true // 启用阴影
+                    },
+                    ambientCubemap: {
+                        diffuseIntensity: 0.2 // 环境光强度
+                    }
+                },
+                viewControl: {
+                    distance: 200, // 相机距离，数值越大，球体越小
+                    center: [0, 0, 0], // 球体中心位置，默认即可
+                    autoRotate: true, // 开启自动旋转
+                    autoRotateSpeed: 5  // 自动旋转速度
+                }
+            }
+        };
+
+        var chart = echarts.init(document.getElementById('container'));
+        chart.setOption(option);
+
+        // 自动旋转金星
+        chart.on('rendered', function () {
+            chart.getModel().getComponent('globe').viewControl.autoRotate = true;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Rotating Neptune (Local)</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min.js"></script>
+    <!-- 引入 Google Fonts 的艺术字体和Stencil字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=STIX+Two+Text&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+        #container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* 返回按钮样式 */
+        .button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #00aaff;
+            border: none;
+            border-radius: 50%; /* 圆形 */
+            cursor: pointer;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(0, 170, 255, 0.7); /* 初始光晕效果增强 */
+            transition: box-shadow 0.3s ease; /* 光晕过渡效果 */
+            z-index: 10;
+        }
+        .button:hover {
+            box-shadow: 0 0 30px rgba(0, 170, 255, 1); /* 鼠标悬停时光晕加重 */
+        }
+        .info-panel {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 25%; /* 控制宽度以避免遮挡海王星 */
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 5px;
+            text-align: left;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+        .info-panel h1 span:nth-child(1) {
+            font-family: 'STIX Two Text', serif; /* 使用Stencil字体 */
+            color: #00aaff;
+            font-size: 50px; /* 增大标题字号 */
+        }
+        .info-panel h1 span:nth-child(2) {
+            font-family: 'Dancing Script', cursive; /* 艺术字体 */
+            color: #00aaff;
+            font-size: 50px; /* 增大标题字号 */
+        }
+        .info-panel p {
+            font-family: 'Beijing', serif; /* 碑楷体 */
+            font-size: 14px;
+            line-height: 2; /* 增大行间距 */
+        }
+        .metrics {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            text-align: right;
+        }
+        .metrics div {
+            margin-bottom: 10px;
+        }
+        .metrics span {
+            font-family: 'Beijing', serif; /* 碑楷体 */
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .metrics .value {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <!-- 返回按钮 -->
+    <button class="button" onclick="window.history.back()">&lt;</button>
+    <!-- 左侧文字信息 -->
+    <div class="info-panel">
+        <h1><span>Neptune</span><span>海王星</span></h1>
+        <p>海王星（Neptune）是太阳系八大行星之一，按离太阳由近及远的次序排列为第八颗，属于气态巨行星。海王星的直径约为49,244公里，质量约为地球的17倍，平均距离太阳约45亿公里。它的大气主要由氢、氦和甲烷组成，表面呈现蓝色是因为甲烷吸收了红色光。海王星拥有强烈的风暴系统，其中最著名的是“大暗斑”。海王星有一颗已知的天然卫星——特里同（Triton），它是太阳系中少数几个逆行轨道运行的大型卫星之一。</p>
+    </div>
+    <!-- 右侧数据 -->
+    <div class="metrics">
+        <div>
+            <span class="value">4,500,000,000 km</span><br>
+            <span>距离差</span>
+        </div>
+        <div>
+            <span class="value">-214°C</span><br>
+            <span>温度差</span>
+        </div>
+    </div>
+    <script>
+        var option = {
+            backgroundColor: '#000',
+            globe: {
+                baseTexture: '2k_hai-neptune.jpg', // 本地海王星纹理
+                heightTexture: '2k_hai-neptune.jpg', // 海王星没有固态表面，可以使用相同纹理作为高度图
+                displacementScale: 0.02, // 地形高度缩放（对于海王星这种气态巨行星来说较小）
+                shading: 'realistic', // 真实感渲染
+                environment: '#000', // 背景颜色
+                realisticMaterial: {
+                    roughness: 0.9, // 表面粗糙度
+                    metalness: 0.1  // 金属感
+                },
+                postEffect: {
+                    enable: true // 后处理效果
+                },
+                light: {
+                    main: {
+                        intensity: 1, // 主光源强度
+                        shadow: true // 启用阴影
+                    },
+                    ambientCubemap: {
+                        diffuseIntensity: 0.2 // 环境光强度
+                    }
+                },
+                viewControl: {
+                    distance: 200, // 相机距离，数值越大，球体越小
+                    center: [0, 0, 0], // 球体中心位置，默认即可
+                    autoRotate: true, // 开启自动旋转
+                    autoRotateSpeed: 5 // 自动旋转速度
+                }
+            }
+        };
+
+        var chart = echarts.init(document.getElementById('container'));
+        chart.setOption(option);
+    </script>
+</body>
+</html>

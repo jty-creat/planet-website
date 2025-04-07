@@ -1,0 +1,299 @@
+/* 全局样式 */
+:root {
+    --primary: #8a2be2;
+    --secondary: #00e5ff;
+    --text: #ffffff;
+    --bg-dark: #0a0e24;
+    --card-width: 800px;
+    --card-height: 400px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    height: 100vh;
+    font-family: 'Exo 2', sans-serif;
+    color: var(--text);
+    background: var(--bg-dark);
+}
+
+/* 星空背景 */
+#stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* 页面头部 */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    height: 10vh;
+    width: 100%;
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    width: calc(100vw / 12);
+    height: 10vh;
+}
+
+.logo {
+    height: 30px;
+    width: auto;
+    z-index: 2;
+}
+
+.logo-glow {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: var(--primary);
+    border-radius: 50%;
+    filter: blur(15px);
+    opacity: 0.6;
+    left: 15px;
+    animation: pulse 4s infinite alternate;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.4; }
+    100% { opacity: 0.7; }
+}
+
+.page-header h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 2px;
+    text-shadow: 0 0 15px rgba(138, 43, 226, 0.7);
+    writing-mode: horizontal-tb;
+
+    writing-mode: horizontal-tb !important;
+    text-orientation: mixed;
+    white-space: nowrap; /* 防止文字换行 */
+    
+    /* 布局相关 */
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+/* 返回按钮 */
+.back-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.back-btn:hover {
+    background: rgba(138, 43, 226, 0.3);
+    transform: translateX(-5px);
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+}
+
+.arrow-icon {
+    width: 20px;
+    height: 20px;
+    border-left: 3px solid var(--primary);
+    border-bottom: 3px solid var(--primary);
+    transform: rotate(45deg);
+    margin-right: 5px;
+}
+
+/* 卡片轮播区 */
+.card-carousel-container {
+    position: absolute;
+    top: calc(100vh * 2 / 6);
+    height: calc(100vh * 3 / 6);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.card-carousel {
+    display: flex;
+    transition: transform 0.5s ease;
+    height: 100%;
+    align-items: center;
+    width: max-content;
+    min-width: 100%;
+}
+
+.planet-card {
+    width: var(--card-width);
+    height: var(--card-height);
+    margin: 0 20px;
+    background: rgba(20, 20, 40, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    display: flex;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.planet-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(138, 43, 226, 0.3);
+}
+
+.planet-image {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+}
+
+.planet-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 20px rgba(138, 43, 226, 0.5));
+}
+
+.planet-name {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 33%;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3rem;
+    color: var(--primary);
+    text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+    letter-spacing: 10px;
+}
+
+.carousel-controls {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 40px;
+    pointer-events: none;
+}
+
+.control-btn {
+    pointer-events: all;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(138, 43, 226, 0.3);
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.control-btn:hover {
+    background: rgba(138, 43, 226, 0.5);
+    transform: scale(1.1);
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+    :root {
+        --card-width: 700px;
+        --card-height: 350px;
+    }
+    
+    .planet-name {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        padding: 15px 20px;
+        height: 80px;
+    }
+    
+    .logo {
+        height: 40px;
+    }
+    
+    .logo-glow {
+        width: 50px;
+        height: 50px;
+        left: 10px;
+    }
+    
+    .page-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .back-btn {
+        width: 40px;
+        height: 40px;
+    }
+    
+    :root {
+        --card-width: 500px;
+        --card-height: 250px;
+    }
+    
+    .planet-name {
+        font-size: 1.8rem;
+        padding-top: 30%;
+    }
+}
+
+@media (max-width: 576px) {
+    :root {
+        --card-width: 300px;
+        --card-height: 400px;
+    }
+    
+    .planet-card {
+        flex-direction: column;
+    }
+    
+    .planet-image, .planet-name {
+        width: 100%;
+        height: 50%;
+    }
+    
+    .planet-image {
+        padding: 20px;
+    }
+    
+    .planet-name {
+        padding-top: 0;
+        align-items: center;
+    }
+}

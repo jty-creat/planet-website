@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Rotating Jupiter (Local)</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min.js"></script>
+    <!-- 引入 Google Fonts 的艺术字体和Stencil字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=STIX+Two+Text&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+        #container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* 返回按钮样式 */
+        .button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #ffcc66; /* 木星主题色（浅橙色） */
+            border: none;
+            border-radius: 50%; /* 圆形 */
+            cursor: pointer;
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(255, 204, 102, 0.7); /* 初始光晕效果增强 */
+            transition: box-shadow 0.3s ease; /* 光晕过渡效果 */
+            z-index: 10;
+        }
+        .button:hover {
+            box-shadow: 0 0 30px rgba(255, 204, 102, 1); /* 鼠标悬停时光晕加重 */
+        }
+        .info-panel {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 25%; /* 控制宽度以避免遮挡木星 */
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 5px;
+            text-align: left;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+        .info-panel h1 span:nth-child(1) {
+            font-family: 'STIX Two Text', serif; /* 使用Stencil字体 */
+            color: #ffcc66; /* 木星主题色 */
+            font-size: 50px; /* 增大标题字号 */
+        }
+        .info-panel h1 span:nth-child(2) {
+            font-family: 'Dancing Script', cursive; /* 艺术字体 */
+            color: #ffcc66; /* 木星主题色 */
+            font-size: 50px; /* 增大标题字号 */
+        }
+        .info-panel p {
+            font-family: 'Beijing', serif; /* 碑楷体 */
+            font-size: 14px;
+            line-height: 2; /* 增大行间距 */
+        }
+        .metrics {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            text-align: right;
+        }
+        .metrics div {
+            margin-bottom: 10px;
+        }
+        .metrics span {
+            font-family: 'Beijing', serif; /* 碑楷体 */
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .metrics .value {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <!-- 返回按钮 -->
+    <button class="button" onclick="window.history.back()">&lt;</button>
+    <!-- 左侧文字信息 -->
+    <div class="info-panel">
+        <h1><span>Jupiter</span><span>木星</span></h1>
+        <p>木星（Jupiter）是太阳系中最大的行星，也是距离太阳第五远的行星。它的质量约为地球的318倍，直径约为142,984公里。木星是一颗气态巨行星，主要由氢和氦组成，没有固体表面。其最显著的特征是被称为“大红斑”的巨大风暴，已经持续存在了至少几百年。木星拥有强大的磁场和至少92颗已知卫星，其中伽利略卫星（如木卫一、木卫二等）是最著名的。</p>
+    </div>
+    <!-- 右侧数据 -->
+    <div class="metrics">
+        <div>
+            <span class="value">778,547,200 km</span><br>
+            <span>与太阳平均距离</span>
+        </div>
+        <div>
+            <span class="value">-145°C</span><br>
+            <span>平均温度</span>
+        </div>
+        
+    </div>
+    <script>
+        var option = {
+            backgroundColor: '#000',
+            globe: {
+                baseTexture: '8k_mu-jupiter.jpg', // 本地木星纹理
+                heightTexture: '8k_mu-jupiter.jpg', // 由于木星没有固体表面，可以使用相同纹理作为高度图
+                displacementScale: 0.02, // 地形高度缩放（对于木星这种气态巨星来说较小）
+                shading: 'realistic', // 真实感渲染
+                environment: '#000', // 背景颜色
+                realisticMaterial: {
+                    roughness: 0.9, // 表面粗糙度
+                    metalness: 0.1  // 金属感
+                },
+                postEffect: {
+                    enable: true // 后处理效果
+                },
+                light: {
+                    main: {
+                        intensity: 0.5, // 主光源强度
+                        shadow: true // 启用阴影
+                    },
+                    ambientCubemap: {
+                        diffuseIntensity: 0.2 // 环境光强度
+                    }
+                },
+                viewControl: {
+                    distance: 200, // 相机距离，数值越大，球体越小
+                    center: [0, 0, 0], // 球体中心位置，默认即可
+                    autoRotate: true, // 开启自动旋转
+                    autoRotateSpeed: 5 // 自动旋转速度
+                }
+            }
+        };
+
+        var chart = echarts.init(document.getElementById('container'));
+        chart.setOption(option);
+
+        // 自动旋转木星
+        chart.on('rendered', function () {
+            chart.getModel().getComponent('globe').viewControl.autoRotate = true;
+        });
+    </script>
+</body>
+</html>

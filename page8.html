@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>望远镜详情</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Exo+2:wght@300;500&display=swap">
+    <link rel="stylesheet" href="css/style5.css">
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- 宇宙背景 -->
+    <div id="universe-bg"></div>
+    
+    <!-- 返回按钮 -->
+    <div class="back-btn" id="back-btn">
+        <div class="arrow-icon"></div>
+    </div>
+    
+    <!-- 主内容区 -->
+    <main class="content-container">
+        <!-- 左半部分 -->
+        <div class="left-section">
+            <!-- 标题区 -->
+            <div class="title-section" font-family="cursive">
+                <h1 class="eng-title">DOBSONIAN</h1>
+                <h1 class="chn-title">道布森望远镜</h1>
+            </div>
+            
+            <!-- 介绍文本 -->
+            <div class="description-section">
+                <h2>由美国著名天文科普活动家约翰·道布森于1950年代开始设计制作。由于成本低廉,结构简单坚固且方便携带。非常适合天文爱好者自行制作。70年代在天文学爱好者中开始流行。近年来一些天文望远镜厂商也多有应用到量产产品上。</h2>
+            </div>
+            
+            <!-- 信息区 -->
+            <div class="info-section">
+                <div class="info-item">
+                    <h4>放大倍数</h4>
+                    <h6>150倍</h6>
+                </div>
+                <div class="info-item">
+                    <h4>最佳观测</h4>
+                    <h6>深空天体、星云细节</h6>
+                </div>
+                <div class="info-item">
+                    <h4>维护难度</h4>
+                    <h6>简单</h6>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 右半部分 -->
+        <div class="right-section">
+            <img src="道布森3-removebg-preview.png" alt="反射式望远镜" class="telescope-image">
+        </div>
+    </main>
+    <script src="js/three-scene4.js"></script>
+    <script src="js/main5.js"></script>
+</body>
+</html>
